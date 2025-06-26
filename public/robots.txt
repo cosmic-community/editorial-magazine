@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://editorial.com/sitemap.xml
+
+# Disallow crawling of admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow crawling of all public content
+Allow: /articles/
+Allow: /categories/
+Allow: /authors/
+Allow: /about
+
+# Crawl-delay for courtesy
+Crawl-delay: 1
