@@ -1,4 +1,3 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,8 +20,7 @@
     font-feature-settings: 'cv11', 'ss01';
     font-variation-settings: 'opsz' 32;
     overflow-x: hidden;
-    /* Add top padding to account for fixed header */
-    padding-top: 4rem;
+    /* Remove top padding since articles now have proper spacing */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -319,7 +317,7 @@
   }
 }
 
-/* Add specific fixes for header overlap */
+/* Remove main margin as articles now have proper spacing */
 main {
   margin-top: 0;
 }

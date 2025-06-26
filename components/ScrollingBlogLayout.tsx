@@ -24,7 +24,9 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     if (!containerRef.current || isTransitioning) return
     
     const clampedIndex = Math.max(0, Math.min(articles.length - 1, slideIndex))
-    const slidePosition = containerRef.current.offsetTop + (clampedIndex * window.innerHeight)
+    // Add header height offset (4rem = 64px) to position calculation
+    const headerHeight = 64
+    const slidePosition = containerRef.current.offsetTop + (clampedIndex * window.innerHeight) + headerHeight
     
     setIsTransitioning(true)
     setIsNavigating(true) // Mark as manual navigation
@@ -50,8 +52,9 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     setIsNavigating(true) // Mark as manual navigation
     setShowFooterTransition(true)
     
-    // Calculate footer position (after all slides)
-    const footerPosition = containerRef.current.offsetTop + (articles.length * window.innerHeight)
+    // Calculate footer position (after all slides) with header offset
+    const headerHeight = 64
+    const footerPosition = containerRef.current.offsetTop + (articles.length * window.innerHeight) + headerHeight
     
     window.scrollTo({
       top: footerPosition,
@@ -84,9 +87,10 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     const containerTop = containerRef.current.offsetTop
     const containerHeight = containerRef.current.offsetHeight
     const windowHeight = window.innerHeight
+    const headerHeight = 64
     
-    const isInBlogSection = scrollTop >= containerTop - windowHeight * 0.1 && 
-                           scrollTop <= containerTop + containerHeight - windowHeight * 0.9
+    const isInBlogSection = scrollTop >= containerTop + headerHeight - windowHeight * 0.1 && 
+                           scrollTop <= containerTop + containerHeight + headerHeight - windowHeight * 0.9
 
     if (!isInBlogSection) return
 
@@ -166,9 +170,10 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       const containerTop = containerRef.current.offsetTop
       const containerHeight = containerRef.current.offsetHeight
       const windowHeight = window.innerHeight
+      const headerHeight = 64
 
-      // Calculate which slide should be active based on scroll position
-      const relativeScroll = scrollTop - containerTop
+      // Calculate which slide should be active based on scroll position with header offset
+      const relativeScroll = scrollTop - containerTop - headerHeight
       const slideHeight = windowHeight
       const activeSlide = Math.floor(relativeScroll / slideHeight + 0.5)
 
@@ -186,8 +191,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       }
 
       // Check if we're actively scrolling through the blog section
-      const isInBlogSection = scrollTop >= containerTop && 
-                             scrollTop <= containerTop + containerHeight - windowHeight
+      const isInBlogSection = scrollTop >= containerTop + headerHeight && 
+                             scrollTop <= containerTop + containerHeight + headerHeight - windowHeight
       setIsScrolling(isInBlogSection)
     }
 
@@ -274,7 +279,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
   if (!articles.length) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ paddingTop: '4rem' }}>
         <p className="text-muted-foreground text-lg">No articles found.</p>
       </div>
     )
@@ -282,8 +287,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
   return (
     <>
-      {/* Progress Indicator */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
+      {/* Progress Indicator - positioned below fixed header */}
+      <div className="fixed top-16 left-0 w-full h-1 bg-gray-200 z-40">
         <div 
           className="h-full bg-primary transition-all duration-300 ease-out"
           style={{ 
@@ -292,19 +297,22 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         />
       </div>
 
-      {/* Slide Counter */}
-      <div className="fixed top-6 right-6 z-40 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium">
+      {/* Slide Counter - positioned below header */}
+      <div className="fixed top-20 right-6 z-40 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium">
         {showFooterTransition ? 'Footer' : `${currentSlide + 1} / ${articles.length}`}
       </div>
 
-      {/* Main Container */}
+      {/* Main Container - starts below header */}
       <div 
         ref={containerRef}
         className="relative snap-container"
-        style={{ height: `${articles.length * 100}vh` }}
+        style={{ 
+          height: `${articles.length * 100}vh`,
+          marginTop: '4rem' // Add top margin to account for fixed header
+        }}
       >
         {/* Fixed Viewport */}
-        <div className="fixed inset-0 overflow-hidden">
+        <div className="fixed inset-0 overflow-hidden" style={{ top: '4rem' }}>
           {articles.map((article, index) => (
             <BlogSlide
               key={article.id}
@@ -323,8 +331,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
           )}
         </div>
 
-        {/* Navigation Dots - Vertical Layout */}
-        <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 flex flex-col items-center space-y-4">
+        {/* Navigation Dots - Vertical Layout - positioned accounting for header */}
+        <div className="fixed left-4 z-40 flex flex-col items-center space-y-4" style={{ top: 'calc(50% + 2rem)' }}>
           {articles.map((_, index) => (
             <button
               key={index}
