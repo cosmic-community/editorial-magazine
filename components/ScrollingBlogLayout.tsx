@@ -267,15 +267,6 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         {showFooterTransition ? 'Footer' : `${currentSlide + 1} / ${articles.length}`}
       </div>
 
-      {/* Instructions */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-40 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2">
-        <span>Scroll or use arrow keys to navigate</span>
-        <div className="flex gap-1">
-          <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-xs">↑</kbd>
-          <kbd className="px-1.5 py-0.5 bg-white/20 rounded text-xs">↓</kbd>
-        </div>
-      </div>
-
       {/* Main Container */}
       <div 
         ref={containerRef}
@@ -340,45 +331,6 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
             aria-label="Go to footer"
           />
         </div>
-
-        {/* Navigation Arrows */}
-        <button
-          onClick={() => {
-            if (!isTransitioning) {
-              if (showFooterTransition) {
-                setCurrentSlide(articles.length - 1)
-                scrollToSlide(articles.length - 1)
-                setShowFooterTransition(false)
-              } else if (currentSlide > 0) {
-                setCurrentSlide(prev => prev - 1)
-                scrollToSlide(currentSlide - 1)
-              }
-            }
-          }}
-          disabled={(currentSlide === 0 && !showFooterTransition) || isTransitioning}
-          className="fixed left-1/2 top-6 transform -translate-x-1/2 z-40 bg-black/80 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-black/90 transition-colors"
-          aria-label="Previous"
-        >
-          ↑
-        </button>
-
-        <button
-          onClick={() => {
-            if (!isTransitioning) {
-              if (currentSlide < articles.length - 1) {
-                setCurrentSlide(prev => prev + 1)
-                scrollToSlide(currentSlide + 1)
-              } else {
-                scrollToFooter()
-              }
-            }
-          }}
-          disabled={isTransitioning}
-          className="fixed left-1/2 bottom-20 transform -translate-x-1/2 z-40 bg-black/80 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-black/90 transition-colors"
-          aria-label="Next"
-        >
-          ↓
-        </button>
       </div>
     </>
   )
