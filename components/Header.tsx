@@ -22,7 +22,7 @@ export default function Header({ siteSettings }: HeaderProps) {
   }, [])
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
         ? 'bg-white/95 backdrop-blur-sm border-b border-border shadow-sm' 
         : 'bg-white'
@@ -40,7 +40,14 @@ export default function Header({ siteSettings }: HeaderProps) {
                 className="h-8 w-auto"
               />
             ) : (
-              <h1 className="text-2xl font-serif font-medium">
+              <h1 
+                className="text-2xl font-serif font-medium"
+                style={{
+                  lineHeight: '1.3',
+                  paddingTop: '0.25rem',
+                  paddingBottom: '0.25rem'
+                }}
+              >
                 {siteSettings?.metadata?.site_name || 'Editorial'}
               </h1>
             )}

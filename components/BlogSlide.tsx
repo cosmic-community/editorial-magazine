@@ -56,17 +56,23 @@ export default function BlogSlide({
       )}
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center justify-center px-6 py-12">
+      <div className="relative z-10 h-full flex items-center justify-center px-6 py-16 safe-top">
         <div className="max-w-6xl mx-auto w-full h-full flex items-center">
           <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
             {/* Text Content */}
-            <div className="text-white space-y-6 max-w-2xl">
+            <div className="text-white space-y-8 max-w-2xl">
               {/* Headline */}
               <h1 
-                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight line-clamp-4 py-3 transform transition-all duration-1000 delay-500 ${
+                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight transform transition-all duration-1000 delay-500 ${
                   hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 }`}
-                style={{ lineHeight: '1.2' }}
+                style={{ 
+                  lineHeight: '1.25',
+                  paddingTop: '1rem',
+                  paddingBottom: '1rem',
+                  marginBottom: '1.5rem',
+                  overflow: 'visible'
+                }}
               >
                 {article.metadata?.headline || article.title}
               </h1>
@@ -74,9 +80,15 @@ export default function BlogSlide({
               {/* Subheading */}
               {article.metadata?.subheading && (
                 <p 
-                  className={`text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed py-2 transform transition-all duration-1000 delay-700 ${
+                  className={`text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed transform transition-all duration-1000 delay-700 ${
                     hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
+                  style={{
+                    paddingTop: '0.75rem',
+                    paddingBottom: '0.75rem',
+                    marginBottom: '1.25rem',
+                    lineHeight: '1.6'
+                  }}
                 >
                   {article.metadata.subheading}
                 </p>
@@ -85,9 +97,15 @@ export default function BlogSlide({
               {/* Excerpt */}
               {article.metadata?.excerpt && (
                 <p 
-                  className={`text-base md:text-lg text-gray-300 leading-relaxed max-w-xl py-2 transform transition-all duration-1000 delay-900 ${
+                  className={`text-base md:text-lg text-gray-300 leading-relaxed max-w-xl transform transition-all duration-1000 delay-900 ${
                     hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
+                  style={{
+                    paddingTop: '0.625rem',
+                    paddingBottom: '0.625rem',
+                    marginBottom: '1.5rem',
+                    lineHeight: '1.7'
+                  }}
                 >
                   {article.metadata.excerpt}
                 </p>
@@ -98,6 +116,11 @@ export default function BlogSlide({
                 className={`transform transition-all duration-1000 delay-1100 ${
                   hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                 }`}
+                style={{
+                  paddingTop: '0.75rem',
+                  paddingBottom: '0.75rem',
+                  marginBottom: '1.5rem'
+                }}
               >
                 <AuthorByline 
                   author={article.metadata?.author} 
@@ -112,6 +135,10 @@ export default function BlogSlide({
                 className={`transform transition-all duration-1000 delay-1300 ${
                   hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                 }`}
+                style={{
+                  paddingTop: '1rem',
+                  marginTop: '1.5rem'
+                }}
               >
                 <Link
                   href={`/articles/${article.slug}`}
@@ -138,7 +165,7 @@ export default function BlogSlide({
             >
               {/* Additional visual element or content preview */}
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 max-w-md">
-                <div className="space-y-4">
+                <div className="space-y-6">
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-primary rounded-full"></div>
                     <span className="text-white/80 text-sm uppercase tracking-wider">Featured Story</span>
@@ -148,10 +175,22 @@ export default function BlogSlide({
                   {article.metadata?.category && (
                     <Link
                       href={`/categories/${article.metadata.category.slug}`}
-                      className="block p-3 bg-white/20 hover:bg-white/30 rounded-lg transition-colors group"
+                      className="block p-4 bg-white/20 hover:bg-white/30 rounded-lg transition-colors group"
+                      style={{
+                        paddingTop: '1rem',
+                        paddingBottom: '1rem',
+                        marginBottom: '1rem'
+                      }}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="text-white font-medium">
+                        <span 
+                          className="text-white font-medium"
+                          style={{
+                            lineHeight: '1.5',
+                            paddingTop: '0.25rem',
+                            paddingBottom: '0.25rem'
+                          }}
+                        >
                           {article.metadata.category.metadata?.name || article.metadata.category.title}
                         </span>
                         <svg 
@@ -163,20 +202,42 @@ export default function BlogSlide({
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                       </div>
-                      <p className="text-white/70 text-sm mt-1">View all articles in this category</p>
+                      <p 
+                        className="text-white/70 text-sm mt-2"
+                        style={{
+                          lineHeight: '1.5',
+                          paddingTop: '0.375rem'
+                        }}
+                      >
+                        View all articles in this category
+                      </p>
                     </Link>
                   )}
                   
                   {/* Clickable Tags */}
                   {article.metadata?.tags && (
-                    <div className="space-y-2">
-                      <span className="text-white/80 text-xs uppercase tracking-wider">Related Topics</span>
+                    <div className="space-y-3">
+                      <span 
+                        className="text-white/80 text-xs uppercase tracking-wider"
+                        style={{
+                          paddingTop: '0.5rem',
+                          paddingBottom: '0.25rem',
+                          lineHeight: '1.4'
+                        }}
+                      >
+                        Related Topics
+                      </span>
                       <div className="flex flex-wrap gap-2">
                         {article.metadata.tags.split(',').slice(0, 3).map((tag, tagIndex) => (
                           <Link
                             key={tagIndex}
                             href={`/categories?tag=${encodeURIComponent(tag.trim())}`}
-                            className="px-3 py-1 bg-white/20 hover:bg-white/30 text-white text-xs rounded-full transition-colors hover:scale-105"
+                            className="px-3 py-2 bg-white/20 hover:bg-white/30 text-white text-xs rounded-full transition-colors hover:scale-105"
+                            style={{
+                              paddingTop: '0.5rem',
+                              paddingBottom: '0.5rem',
+                              lineHeight: '1.4'
+                            }}
                           >
                             {tag.trim()}
                           </Link>
@@ -186,11 +247,26 @@ export default function BlogSlide({
                   )}
 
                   {article.metadata?.read_time && (
-                    <div className="flex items-center space-x-2 text-white/70">
+                    <div 
+                      className="flex items-center space-x-2 text-white/70"
+                      style={{
+                        paddingTop: '0.75rem',
+                        marginTop: '1rem'
+                      }}
+                    >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <span className="text-sm">{article.metadata.read_time}</span>
+                      <span 
+                        className="text-sm"
+                        style={{
+                          lineHeight: '1.5',
+                          paddingTop: '0.25rem',
+                          paddingBottom: '0.25rem'
+                        }}
+                      >
+                        {article.metadata.read_time}
+                      </span>
                     </div>
                   )}
                 </div>
@@ -204,7 +280,15 @@ export default function BlogSlide({
       {isActive && index < totalArticles - 1 && (
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
           <div className="flex flex-col items-center space-y-2">
-            <span className="text-sm opacity-80">Scroll to explore</span>
+            <span 
+              className="text-sm opacity-80"
+              style={{
+                lineHeight: '1.4',
+                paddingBottom: '0.5rem'
+              }}
+            >
+              Scroll to explore
+            </span>
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
