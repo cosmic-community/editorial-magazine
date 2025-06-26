@@ -1,4 +1,3 @@
-// components/CategoryButtons.tsx
 import Link from 'next/link'
 import { Category } from '@/types'
 
