@@ -276,11 +276,6 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         />
       </div>
 
-      {/* Slide Counter */}
-      <div className="fixed top-20 right-6 z-40 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium">
-        {showFooterTransition ? 'Footer' : `${currentSlide + 1} / ${articles.length}`}
-      </div>
-
       {/* Main Container */}
       <div 
         ref={containerRef}
