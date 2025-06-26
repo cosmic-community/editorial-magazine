@@ -302,8 +302,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
           )}
         </div>
 
-        {/* Navigation Dots - Vertical Layout */}
-        <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 flex flex-col items-center space-y-4">
+        {/* Navigation Dots - Vertical Layout - Hidden on Mobile */}
+        <div className="hidden md:fixed md:left-4 md:top-1/2 md:transform md:-translate-y-1/2 md:z-40 md:flex md:flex-col md:items-center md:space-y-4">
           {articles.map((_, index) => (
             <button
               key={index}

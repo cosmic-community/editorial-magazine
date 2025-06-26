@@ -5,8 +5,8 @@
 
 @layer base {
   :root {
-    --background: 255 255 255;
-    --foreground: 0 0 0;
+    --background: 34 60 47;
+    --foreground: 255 255 255;
     --primary: 37 99 235;
     --primary-foreground: 255 255 255;
     --muted: 248 250 252;
