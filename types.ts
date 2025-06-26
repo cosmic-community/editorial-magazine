@@ -29,6 +29,9 @@ export interface SiteSettings extends CosmicObject {
     newsletter_heading?: string;
     newsletter_description?: string;
     footer_about?: string;
+    contact_email?: string;
+    phone?: string;
+    address?: string;
     social_links?: {
       twitter?: string;
       instagram?: string;

@@ -28,6 +28,10 @@ export default function Footer({ siteSettings }: FooterProps) {
     }, 1000)
   }
 
+  const contactEmail = siteSettings?.metadata?.contact_email || 'hello@editorial.com'
+  const phoneNumber = siteSettings?.metadata?.phone
+  const address = siteSettings?.metadata?.address
+
   return (
     <footer className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-black text-white overflow-hidden">
       {/* Background Pattern */}
@@ -169,16 +173,16 @@ export default function Footer({ siteSettings }: FooterProps) {
                   <div>
                     <p className="text-slate-400 text-sm">Email Us</p>
                     <a 
-                      href={`mailto:${siteSettings?.metadata?.contact_email || 'hello@editorial.com'}`}
+                      href={`mailto:${contactEmail}`}
                       className="text-white font-medium hover:text-blue-300 transition-colors"
                     >
-                      {siteSettings?.metadata?.contact_email || 'hello@editorial.com'}
+                      {contactEmail}
                     </a>
                   </div>
                 </div>
               </div>
 
-              {siteSettings?.metadata?.phone && (
+              {phoneNumber && (
                 <div className="group">
                   <div className="flex items-center space-x-4 p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300">
                     <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-500 rounded-lg flex items-center justify-center">
@@ -187,17 +191,17 @@ export default function Footer({ siteSettings }: FooterProps) {
                     <div>
                       <p className="text-slate-400 text-sm">Call Us</p>
                       <a 
-                        href={`tel:${siteSettings.metadata.phone}`}
+                        href={`tel:${phoneNumber}`}
                         className="text-white font-medium hover:text-green-300 transition-colors"
                       >
-                        {siteSettings.metadata.phone}
+                        {phoneNumber}
                       </a>
                     </div>
                   </div>
                 </div>
               )}
 
-              {siteSettings?.metadata?.address && (
+              {address && (
                 <div className="group">
                   <div className="flex items-center space-x-4 p-4 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all duration-300">
                     <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
@@ -206,7 +210,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                     <div>
                       <p className="text-slate-400 text-sm">Visit Us</p>
                       <p className="text-white font-medium">
-                        {siteSettings.metadata.address}
+                        {address}
                       </p>
                     </div>
                   </div>
