@@ -31,7 +31,7 @@ export default function Header({ siteSettings }: HeaderProps) {
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white border-b border-gray-200"
       style={{ 
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
         backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none'
@@ -39,8 +39,8 @@ export default function Header({ siteSettings }: HeaderProps) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Hamburger Menu */}
-          <HamburgerMenu />
+          {/* Empty space for hamburger menu - it's now positioned fixed */}
+          <div className="w-10 h-10" />
 
           {/* Logo / Site Name - Centered */}
           <Link 
@@ -66,6 +66,9 @@ export default function Header({ siteSettings }: HeaderProps) {
           <div className="w-10 h-10" />
         </div>
       </div>
+
+      {/* Hamburger Menu - positioned independently */}
+      <HamburgerMenu />
     </header>
   )
 }
