@@ -1,0 +1,138 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 0 0 0;
+    --primary: 37 99 235;
+    --primary-foreground: 255 255 255;
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
+    --border: 229 231 235;
+  }
+
+  body {
+    color: hsl(var(--foreground));
+    background: hsl(var(--background));
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' 32;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .prose {
+    color: hsl(var(--foreground));
+    max-width: none;
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    color: hsl(var(--foreground));
+  }
+
+  .prose p {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  .prose blockquote {
+    border-left: 4px solid hsl(var(--primary));
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
+    font-size: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .prose ul, .prose ol {
+    margin: 1.5rem 0;
+  }
+
+  .prose li {
+    margin: 0.5rem 0;
+  }
+
+  .prose strong {
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)) 50%, hsl(var(--muted-foreground)));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+}
+
+@layer components {
+  .article-content {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: hsl(var(--foreground));
+  }
+
+  .article-content h2 {
+    font-size: 1.875rem;
+    font-weight: 400;
+    margin: 2.5rem 0 1.5rem 0;
+    font-family: Georgia, serif;
+  }
+
+  .article-content h3 {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin: 2rem 0 1rem 0;
+    font-family: Georgia, serif;
+  }
+
+  .article-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .article-content blockquote {
+    border-left: 4px solid hsl(var(--primary));
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: hsl(var(--muted-foreground));
+    font-size: 1.25rem;
+    line-height: 1.6;
+    margin: 2rem 0;
+  }
+
+  .article-content ul, .article-content ol {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+  }
+
+  .article-content li {
+    margin: 0.5rem 0;
+  }
+
+  .article-content strong {
+    font-weight: 600;
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
