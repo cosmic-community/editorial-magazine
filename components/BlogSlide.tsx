@@ -63,9 +63,10 @@ export default function BlogSlide({
             <div className="text-white space-y-6 max-w-2xl">
               {/* Headline */}
               <h1 
-                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight line-clamp-4 transform transition-all duration-1000 delay-500 ${
+                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight line-clamp-4 py-3 transform transition-all duration-1000 delay-500 ${
                   hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 }`}
+                style={{ lineHeight: '1.2' }}
               >
                 {article.metadata?.headline || article.title}
               </h1>
@@ -73,7 +74,7 @@ export default function BlogSlide({
               {/* Subheading */}
               {article.metadata?.subheading && (
                 <p 
-                  className={`text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed transform transition-all duration-1000 delay-700 ${
+                  className={`text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed py-2 transform transition-all duration-1000 delay-700 ${
                     hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
                 >
@@ -84,7 +85,7 @@ export default function BlogSlide({
               {/* Excerpt */}
               {article.metadata?.excerpt && (
                 <p 
-                  className={`text-base md:text-lg text-gray-300 leading-relaxed max-w-xl transform transition-all duration-1000 delay-900 ${
+                  className={`text-base md:text-lg text-gray-300 leading-relaxed max-w-xl py-2 transform transition-all duration-1000 delay-900 ${
                     hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
                 >

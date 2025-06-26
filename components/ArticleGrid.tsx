@@ -45,13 +45,13 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
                 )}
 
                 {/* Title */}
-                <h3 className="text-3xl font-serif mb-4 group-hover:text-primary transition-colors line-clamp-4 leading-tight">
+                <h3 className="text-3xl font-serif mb-4 group-hover:text-primary transition-colors line-clamp-4 leading-relaxed py-1">
                   {articles[0].metadata?.headline || articles[0].title}
                 </h3>
 
                 {/* Excerpt */}
                 {articles[0].metadata?.excerpt && (
-                  <p className="text-muted-foreground text-lg mb-4 line-clamp-3">
+                  <p className="text-muted-foreground text-lg mb-4 line-clamp-3 leading-relaxed">
                     {articles[0].metadata.excerpt}
                   </p>
                 )}
@@ -95,13 +95,13 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
                 )}
 
                 {/* Title */}
-                <h3 className="text-xl font-serif mb-3 group-hover:text-primary transition-colors line-clamp-4 leading-snug">
+                <h3 className="text-xl font-serif mb-3 group-hover:text-primary transition-colors line-clamp-3 leading-relaxed py-1">
                   {article.metadata?.headline || article.title}
                 </h3>
 
                 {/* Excerpt */}
                 {article.metadata?.excerpt && (
-                  <p className="text-muted-foreground mb-3 line-clamp-3 text-sm">
+                  <p className="text-muted-foreground mb-3 line-clamp-3 text-sm leading-relaxed">
                     {article.metadata.excerpt}
                   </p>
                 )}
