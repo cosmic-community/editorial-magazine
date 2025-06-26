@@ -15,7 +15,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
   const [isScrolling, setIsScrolling] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [showFooterTransition, setShowFooterTransition] = useState(false)
-  const [isNavigating, setIsNavigating] = useState(false) // New state to track manual navigation
+  const [isNavigating, setIsNavigating] = useState(false)
   const scrollProgress = useScrollProgress()
   const lastWheelTimeRef = useRef(0)
   const wheelDeltaRef = useRef(0)
@@ -24,24 +24,21 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     if (!containerRef.current || isTransitioning) return
     
     const clampedIndex = Math.max(0, Math.min(articles.length - 1, slideIndex))
-    // Add header height offset (4rem = 64px) to position calculation
-    const headerHeight = 64
-    const slidePosition = containerRef.current.offsetTop + (clampedIndex * window.innerHeight) + headerHeight
+    const slidePosition = containerRef.current.offsetTop + (clampedIndex * window.innerHeight)
     
     setIsTransitioning(true)
-    setIsNavigating(true) // Mark as manual navigation
-    setCurrentSlide(clampedIndex) // Update current slide immediately
-    setShowFooterTransition(false) // Reset footer transition when navigating to slide
+    setIsNavigating(true)
+    setCurrentSlide(clampedIndex)
+    setShowFooterTransition(false)
     
     window.scrollTo({
       top: slidePosition,
       behavior: smooth ? 'smooth' : 'auto'
     })
 
-    // Reset transitioning and navigation state after animation
     setTimeout(() => {
       setIsTransitioning(false)
-      setIsNavigating(false) // Reset navigation flag
+      setIsNavigating(false)
     }, 800)
   }, [articles.length, isTransitioning])
 
@@ -49,12 +46,10 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     if (!containerRef.current || isTransitioning) return
     
     setIsTransitioning(true)
-    setIsNavigating(true) // Mark as manual navigation
+    setIsNavigating(true)
     setShowFooterTransition(true)
     
-    // Calculate footer position (after all slides) with header offset
-    const headerHeight = 64
-    const footerPosition = containerRef.current.offsetTop + (articles.length * window.innerHeight) + headerHeight
+    const footerPosition = containerRef.current.offsetTop + (articles.length * window.innerHeight)
     
     window.scrollTo({
       top: footerPosition,
@@ -63,7 +58,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
     setTimeout(() => {
       setIsTransitioning(false)
-      setIsNavigating(false) // Reset navigation flag
+      setIsNavigating(false)
     }, 800)
   }, [articles.length, isTransitioning])
 
@@ -73,45 +68,37 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     const now = Date.now()
     const timeDelta = now - lastWheelTimeRef.current
     
-    // Accumulate wheel delta for smoother detection
     wheelDeltaRef.current += e.deltaY
     lastWheelTimeRef.current = now
 
-    // Reset accumulated delta if there's a pause in scrolling
     if (timeDelta > 150) {
       wheelDeltaRef.current = e.deltaY
     }
 
-    // Only trigger snap scrolling if we're in the blog section
     const scrollTop = window.scrollY
     const containerTop = containerRef.current.offsetTop
     const containerHeight = containerRef.current.offsetHeight
     const windowHeight = window.innerHeight
-    const headerHeight = 64
     
-    const isInBlogSection = scrollTop >= containerTop + headerHeight - windowHeight * 0.1 && 
-                           scrollTop <= containerTop + containerHeight + headerHeight - windowHeight * 0.9
+    const isInBlogSection = scrollTop >= containerTop - windowHeight * 0.1 && 
+                           scrollTop <= containerTop + containerHeight - windowHeight * 0.9
 
     if (!isInBlogSection) return
 
     e.preventDefault()
 
-    // Threshold for triggering slide change
     const threshold = 100
 
     if (Math.abs(wheelDeltaRef.current) > threshold) {
       if (wheelDeltaRef.current > 0) {
-        // Scroll down
         if (currentSlide < articles.length - 1) {
           const nextSlide = currentSlide + 1
           setCurrentSlide(nextSlide)
           scrollToSlide(nextSlide)
         } else {
-          // At last slide, scroll to footer
           scrollToFooter()
         }
       } else if (wheelDeltaRef.current < 0 && currentSlide > 0) {
-        // Scroll up  
         const prevSlide = currentSlide - 1
         setCurrentSlide(prevSlide)
         scrollToSlide(prevSlide)
@@ -164,20 +151,17 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current || isTransitioning || isNavigating) return // Skip if manually navigating
+      if (!containerRef.current || isTransitioning || isNavigating) return
 
       const scrollTop = window.scrollY
       const containerTop = containerRef.current.offsetTop
       const containerHeight = containerRef.current.offsetHeight
       const windowHeight = window.innerHeight
-      const headerHeight = 64
 
-      // Calculate which slide should be active based on scroll position with header offset
-      const relativeScroll = scrollTop - containerTop - headerHeight
+      const relativeScroll = scrollTop - containerTop
       const slideHeight = windowHeight
       const activeSlide = Math.floor(relativeScroll / slideHeight + 0.5)
 
-      // Check if we're past the last slide (transitioning to footer)
       if (activeSlide >= articles.length) {
         setShowFooterTransition(true)
         setCurrentSlide(articles.length - 1)
@@ -190,27 +174,24 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         }
       }
 
-      // Check if we're actively scrolling through the blog section
-      const isInBlogSection = scrollTop >= containerTop + headerHeight && 
-                             scrollTop <= containerTop + containerHeight + headerHeight - windowHeight
+      const isInBlogSection = scrollTop >= containerTop && 
+                             scrollTop <= containerTop + containerHeight - windowHeight
       setIsScrolling(isInBlogSection)
     }
 
-    // Add event listeners
     window.addEventListener('scroll', handleScroll, { passive: true })
     window.addEventListener('wheel', handleWheel, { passive: false })
     window.addEventListener('keydown', handleKeyDown)
     
-    handleScroll() // Initial call
+    handleScroll()
 
     return () => {
       window.removeEventListener('scroll', handleScroll)
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [articles.length, currentSlide, isTransitioning, isNavigating, handleWheel, handleKeyDown]) // Added isNavigating to dependencies
+  }, [articles.length, currentSlide, isTransitioning, isNavigating, handleWheel, handleKeyDown])
 
-  // Touch/swipe support for mobile
   useEffect(() => {
     let touchStartY = 0
     let touchEndY = 0
@@ -228,7 +209,6 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
       if (Math.abs(deltaY) > threshold) {
         if (deltaY > 0) {
-          // Swipe up - next slide or footer
           if (currentSlide < articles.length - 1) {
             const nextSlide = currentSlide + 1
             setCurrentSlide(nextSlide)
@@ -237,7 +217,6 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
             scrollToFooter()
           }
         } else if (deltaY < 0) {
-          // Swipe down - previous slide
           if (showFooterTransition) {
             const lastSlide = articles.length - 1
             setCurrentSlide(lastSlide)
@@ -279,7 +258,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
   if (!articles.length) {
     return (
-      <div className="min-h-screen flex items-center justify-center" style={{ paddingTop: '4rem' }}>
+      <div className="min-h-screen flex items-center justify-center">
         <p className="text-muted-foreground text-lg">No articles found.</p>
       </div>
     )
@@ -287,7 +266,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
   return (
     <>
-      {/* Progress Indicator - positioned below fixed header */}
+      {/* Progress Indicator */}
       <div className="fixed top-16 left-0 w-full h-1 bg-gray-200 z-40">
         <div 
           className="h-full bg-primary transition-all duration-300 ease-out"
@@ -297,22 +276,19 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         />
       </div>
 
-      {/* Slide Counter - positioned below header */}
+      {/* Slide Counter */}
       <div className="fixed top-20 right-6 z-40 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium">
         {showFooterTransition ? 'Footer' : `${currentSlide + 1} / ${articles.length}`}
       </div>
 
-      {/* Main Container - starts below header */}
+      {/* Main Container */}
       <div 
         ref={containerRef}
         className="relative snap-container"
-        style={{ 
-          height: `${articles.length * 100}vh`,
-          marginTop: '4rem' // Add top margin to account for fixed header
-        }}
+        style={{ height: `${articles.length * 100}vh` }}
       >
         {/* Fixed Viewport */}
-        <div className="fixed inset-0 overflow-hidden" style={{ top: '4rem' }}>
+        <div className="fixed inset-0 overflow-hidden">
           {articles.map((article, index) => (
             <BlogSlide
               key={article.id}
@@ -331,8 +307,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
           )}
         </div>
 
-        {/* Navigation Dots - Vertical Layout - positioned accounting for header */}
-        <div className="fixed left-4 z-40 flex flex-col items-center space-y-4" style={{ top: 'calc(50% + 2rem)' }}>
+        {/* Navigation Dots - Vertical Layout */}
+        <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 flex flex-col items-center space-y-4">
           {articles.map((_, index) => (
             <button
               key={index}
@@ -348,7 +324,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
           ))}
           
           {/* Footer Dot */}
-          <div className="h-2" /> {/* Spacer */}
+          <div className="h-2" />
           <button
             onClick={handleFooterDotClick}
             disabled={isTransitioning}

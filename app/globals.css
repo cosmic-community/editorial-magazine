@@ -20,7 +20,6 @@
     font-feature-settings: 'cv11', 'ss01';
     font-variation-settings: 'opsz' 32;
     overflow-x: hidden;
-    /* Remove top padding since articles now have proper spacing */
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -31,9 +30,7 @@
     padding-bottom: 0.75rem !important;
     margin-top: 0.5rem !important;
     margin-bottom: 0.5rem !important;
-    /* Prevent text clipping */
     overflow: visible !important;
-    /* Ensure proper text rendering */
     text-rendering: optimizeLegibility;
   }
 
@@ -114,8 +111,6 @@
     font-size: 1.125rem;
     line-height: 1.75 !important;
     color: hsl(var(--foreground));
-    /* Add proper spacing from header */
-    margin-top: 2rem;
   }
 
   .article-content h2 {
@@ -199,7 +194,6 @@
     backface-visibility: hidden;
   }
 
-  /* CRITICAL: Improved line-clamp utilities to prevent text clipping */
   .line-clamp-1 {
     overflow: hidden;
     display: -webkit-box;
@@ -248,7 +242,6 @@
     margin-bottom: 0.25rem !important;
   }
 
-  /* Better spacing utilities for proper text rendering */
   .text-xl {
     line-height: 1.4 !important;
     padding: 0.5rem 0 !important;
@@ -279,7 +272,6 @@
     padding: 1.125rem 0 !important;
   }
 
-  /* Better line height utilities */
   .leading-tight {
     line-height: 1.25 !important;
   }
@@ -300,29 +292,24 @@
     line-height: 2 !important;
   }
 
-  /* Safe spacing utility to prevent header overlap */
   .safe-top {
     padding-top: 5rem !important;
   }
 
-  /* Ensure proper spacing for content */
   .content-spacing {
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
 
-  /* Smooth scroll behavior */
   .smooth-scroll {
     scroll-behavior: smooth;
   }
 }
 
-/* Remove main margin as articles now have proper spacing */
 main {
   margin-top: 0;
 }
 
-/* Ensure all containers properly handle text overflow */
 article,
 .article-container,
 .slide-content,
@@ -330,21 +317,16 @@ article,
   overflow: visible !important;
 }
 
-/* Fix for containers that might clip text */
 [class*="line-clamp"] {
-  /* Ensure there's breathing room around clamped text */
   padding-top: 0.5rem !important;
   padding-bottom: 0.5rem !important;
-  /* Add minimum height to prevent compression */
   min-height: 2.5em;
 }
 
-/* Ensure smooth animations for header transitions */
 .header-transition {
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Prevent menu button from being affected by header hide/show */
 .persistent-menu-button {
   position: fixed;
   z-index: 60;
