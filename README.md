@@ -1,5 +1,4 @@
-<!-- README_START -->
-# Editorial Magazine
+# Cosmic Signal
 
 A visually stunning, editorial-style blog inspired by modern online magazines. Built with Next.js 15 and powered by Cosmic CMS, featuring large full-width imagery, elegant typography, and a sophisticated grid-based layout reminiscent of premium digital publications.
 
@@ -61,7 +60,7 @@ The app has been tailored to work with your existing Cosmic content structure an
 1. Clone this repository:
 ```bash
 git clone <repository-url>
-cd editorial-magazine
+cd cosmic-signal
 ```
 
 2. Install dependencies:
@@ -163,4 +162,3 @@ Make sure to set these in your hosting platform:
 - `COSMIC_BUCKET_SLUG`
 - `COSMIC_READ_KEY`
 - `COSMIC_WRITE_KEY`
-<!-- README_END -->

@@ -13,7 +13,7 @@ export async function generateMetadata() {
   const siteSettings = await getSiteSettings()
   
   return {
-    title: siteSettings?.metadata?.site_name || 'Editorial Magazine',
+    title: siteSettings?.metadata?.site_name || 'Cosmic Signal',
     description: siteSettings?.metadata?.tagline || 'Stories that matter, perspectives that inspire',
     icons: {
       icon: siteSettings?.metadata?.favicon?.url || '/favicon.ico',

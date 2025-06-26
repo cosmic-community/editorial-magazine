@@ -56,7 +56,7 @@ export default function Header({ siteSettings }: HeaderProps) {
               />
             ) : (
               <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700">
-                {siteSettings?.metadata?.site_name || 'Editorial'}
+                {siteSettings?.metadata?.site_name || 'Cosmic Signal'}
               </h1>
             )}
           </Link>

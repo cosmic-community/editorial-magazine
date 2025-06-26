@@ -28,7 +28,7 @@ export default function Footer({ siteSettings }: FooterProps) {
     }, 1000)
   }
 
-  const contactEmail = siteSettings?.metadata?.contact_email || 'hello@editorial.com'
+  const contactEmail = siteSettings?.metadata?.contact_email || 'hello@cosmicsignal.com'
   const phoneNumber = siteSettings?.metadata?.phone
   const address = siteSettings?.metadata?.address
 
@@ -164,7 +164,7 @@ export default function Footer({ siteSettings }: FooterProps) {
             <div>
               <Link href="/" className="inline-block group mb-2.5">
                 <h4 className="text-xl font-serif text-white group-hover:text-blue-300 transition-colors">
-                  {siteSettings?.metadata?.site_name || 'Editorial'}
+                  {siteSettings?.metadata?.site_name || 'Cosmic Signal'}
                 </h4>
               </Link>
               {siteSettings?.metadata?.tagline && (
@@ -292,7 +292,7 @@ export default function Footer({ siteSettings }: FooterProps) {
         {/* Copyright */}
         <div className="text-center pt-5 border-t border-white/10">
           <p className="text-slate-400 text-xs">
-            &copy; {currentYear} {siteSettings?.metadata?.site_name || 'Editorial'}. All rights reserved.
+            &copy; {currentYear} {siteSettings?.metadata?.site_name || 'Cosmic Signal'}. All rights reserved.
             <span className="mx-2">•</span>
             Crafted with ❤️ for storytellers everywhere.
           </p>
