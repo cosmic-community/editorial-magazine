@@ -1,6 +1,5 @@
 import { getArticles, getSiteSettings } from '@/lib/cosmic'
 import ScrollingBlogLayout from '@/components/ScrollingBlogLayout'
-import NewsletterSection from '@/components/NewsletterSection'
 import Footer from '@/components/Footer'
 
 export default async function HomePage() {
@@ -14,12 +13,7 @@ export default async function HomePage() {
       {/* Scrolling Blog Layout */}
       <ScrollingBlogLayout articles={articles} />
 
-      {/* Newsletter Section */}
-      {siteSettings?.metadata?.newsletter_enabled && (
-        <NewsletterSection siteSettings={siteSettings} />
-      )}
-
-      {/* Footer */}
+      {/* Footer - Now accessible after scrolling through articles */}
       <Footer siteSettings={siteSettings} />
     </div>
   )

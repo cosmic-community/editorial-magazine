@@ -14,6 +14,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isScrolling, setIsScrolling] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [showFooterTransition, setShowFooterTransition] = useState(false)
   const scrollProgress = useScrollProgress()
   const lastWheelTimeRef = useRef(0)
   const wheelDeltaRef = useRef(0)
@@ -31,6 +32,25 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     })
 
     // Reset transitioning state after animation
+    setTimeout(() => {
+      setIsTransitioning(false)
+    }, 800)
+  }, [articles.length, isTransitioning])
+
+  const scrollToFooter = useCallback(() => {
+    if (!containerRef.current || isTransitioning) return
+    
+    setIsTransitioning(true)
+    setShowFooterTransition(true)
+    
+    // Calculate footer position (after all slides)
+    const footerPosition = containerRef.current.offsetTop + (articles.length * window.innerHeight)
+    
+    window.scrollTo({
+      top: footerPosition,
+      behavior: 'smooth'
+    })
+
     setTimeout(() => {
       setIsTransitioning(false)
     }, 800)
@@ -68,18 +88,24 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     const threshold = 100
 
     if (Math.abs(wheelDeltaRef.current) > threshold) {
-      if (wheelDeltaRef.current > 0 && currentSlide < articles.length - 1) {
+      if (wheelDeltaRef.current > 0) {
         // Scroll down
-        setCurrentSlide(prev => prev + 1)
-        scrollToSlide(currentSlide + 1)
+        if (currentSlide < articles.length - 1) {
+          setCurrentSlide(prev => prev + 1)
+          scrollToSlide(currentSlide + 1)
+        } else {
+          // At last slide, scroll to footer
+          scrollToFooter()
+        }
       } else if (wheelDeltaRef.current < 0 && currentSlide > 0) {
         // Scroll up  
         setCurrentSlide(prev => prev - 1)
         scrollToSlide(currentSlide - 1)
+        setShowFooterTransition(false)
       }
       wheelDeltaRef.current = 0
     }
-  }, [currentSlide, articles.length, isTransitioning, scrollToSlide])
+  }, [currentSlide, articles.length, isTransitioning, scrollToSlide, scrollToFooter])
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (isTransitioning) return
@@ -91,11 +117,17 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         if (currentSlide < articles.length - 1) {
           setCurrentSlide(prev => prev + 1)
           scrollToSlide(currentSlide + 1)
+        } else {
+          scrollToFooter()
         }
         break
       case 'ArrowUp':
         e.preventDefault()
-        if (currentSlide > 0) {
+        if (showFooterTransition) {
+          setCurrentSlide(articles.length - 1)
+          scrollToSlide(articles.length - 1)
+          setShowFooterTransition(false)
+        } else if (currentSlide > 0) {
           setCurrentSlide(prev => prev - 1)
           scrollToSlide(currentSlide - 1)
         }
@@ -104,14 +136,14 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
         e.preventDefault()
         setCurrentSlide(0)
         scrollToSlide(0)
+        setShowFooterTransition(false)
         break
       case 'End':
         e.preventDefault()
-        setCurrentSlide(articles.length - 1)
-        scrollToSlide(articles.length - 1)
+        scrollToFooter()
         break
     }
-  }, [currentSlide, articles.length, isTransitioning, scrollToSlide])
+  }, [currentSlide, articles.length, isTransitioning, scrollToSlide, scrollToFooter, showFooterTransition])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -125,13 +157,19 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       // Calculate which slide should be active based on scroll position
       const relativeScroll = scrollTop - containerTop
       const slideHeight = windowHeight
-      const activeSlide = Math.floor(relativeScroll / slideHeight + 0.5) // Add 0.5 for better snapping
+      const activeSlide = Math.floor(relativeScroll / slideHeight + 0.5)
 
-      // Clamp to valid range
-      const clampedSlide = Math.max(0, Math.min(articles.length - 1, activeSlide))
-      
-      if (clampedSlide !== currentSlide && !isTransitioning) {
-        setCurrentSlide(clampedSlide)
+      // Check if we're past the last slide (transitioning to footer)
+      if (activeSlide >= articles.length) {
+        setShowFooterTransition(true)
+        setCurrentSlide(articles.length - 1)
+      } else {
+        setShowFooterTransition(false)
+        const clampedSlide = Math.max(0, Math.min(articles.length - 1, activeSlide))
+        
+        if (clampedSlide !== currentSlide && !isTransitioning) {
+          setCurrentSlide(clampedSlide)
+        }
       }
 
       // Check if we're actively scrolling through the blog section
@@ -171,14 +209,24 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       const threshold = 50
 
       if (Math.abs(deltaY) > threshold) {
-        if (deltaY > 0 && currentSlide < articles.length - 1) {
-          // Swipe up - next slide
-          setCurrentSlide(prev => prev + 1)
-          scrollToSlide(currentSlide + 1)
-        } else if (deltaY < 0 && currentSlide > 0) {
+        if (deltaY > 0) {
+          // Swipe up - next slide or footer
+          if (currentSlide < articles.length - 1) {
+            setCurrentSlide(prev => prev + 1)
+            scrollToSlide(currentSlide + 1)
+          } else {
+            scrollToFooter()
+          }
+        } else if (deltaY < 0) {
           // Swipe down - previous slide
-          setCurrentSlide(prev => prev - 1)
-          scrollToSlide(currentSlide - 1)
+          if (showFooterTransition) {
+            setCurrentSlide(articles.length - 1)
+            scrollToSlide(articles.length - 1)
+            setShowFooterTransition(false)
+          } else if (currentSlide > 0) {
+            setCurrentSlide(prev => prev - 1)
+            scrollToSlide(currentSlide - 1)
+          }
         }
       }
     }
@@ -192,7 +240,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       window.removeEventListener('touchstart', handleTouchStart)
       window.removeEventListener('touchend', handleTouchEnd)
     }
-  }, [currentSlide, articles.length, isTransitioning, scrollToSlide])
+  }, [currentSlide, articles.length, isTransitioning, scrollToSlide, scrollToFooter, showFooterTransition])
 
   if (!articles.length) {
     return (
@@ -208,13 +256,15 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
         <div 
           className="h-full bg-primary transition-all duration-300 ease-out"
-          style={{ width: `${((currentSlide + 1) / articles.length) * 100}%` }}
+          style={{ 
+            width: `${showFooterTransition ? 100 : ((currentSlide + 1) / articles.length) * 100}%` 
+          }}
         />
       </div>
 
       {/* Slide Counter */}
       <div className="fixed top-6 right-6 z-40 bg-black/80 text-white px-4 py-2 rounded-full text-sm font-medium">
-        {currentSlide + 1} / {articles.length}
+        {showFooterTransition ? 'Footer' : `${currentSlide + 1} / ${articles.length}`}
       </div>
 
       {/* Instructions */}
@@ -240,11 +290,16 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
               article={article}
               index={index}
               currentSlide={currentSlide}
-              isActive={index === currentSlide}
+              isActive={index === currentSlide && !showFooterTransition}
               isScrolling={isScrolling}
               totalArticles={articles.length}
             />
           ))}
+
+          {/* Footer Transition Overlay */}
+          {showFooterTransition && (
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-800/50 to-transparent z-30 transition-opacity duration-1000" />
+          )}
         </div>
 
         {/* Navigation Dots */}
@@ -256,44 +311,71 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
                 if (!isTransitioning) {
                   setCurrentSlide(index)
                   scrollToSlide(index)
+                  setShowFooterTransition(false)
                 }
               }}
               disabled={isTransitioning}
               className={`w-3 h-3 rounded-full transition-all duration-300 disabled:opacity-50 ${
-                index === currentSlide 
+                index === currentSlide && !showFooterTransition
                   ? 'bg-white scale-125' 
                   : 'bg-white/50 hover:bg-white/75'
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
+          
+          {/* Footer Dot */}
+          <button
+            onClick={() => {
+              if (!isTransitioning) {
+                scrollToFooter()
+              }
+            }}
+            disabled={isTransitioning}
+            className={`w-3 h-3 rounded-full transition-all duration-300 disabled:opacity-50 ${
+              showFooterTransition
+                ? 'bg-white scale-125' 
+                : 'bg-white/50 hover:bg-white/75'
+            }`}
+            aria-label="Go to footer"
+          />
         </div>
 
         {/* Navigation Arrows */}
         <button
           onClick={() => {
-            if (currentSlide > 0 && !isTransitioning) {
-              setCurrentSlide(prev => prev - 1)
-              scrollToSlide(currentSlide - 1)
+            if (!isTransitioning) {
+              if (showFooterTransition) {
+                setCurrentSlide(articles.length - 1)
+                scrollToSlide(articles.length - 1)
+                setShowFooterTransition(false)
+              } else if (currentSlide > 0) {
+                setCurrentSlide(prev => prev - 1)
+                scrollToSlide(currentSlide - 1)
+              }
             }
           }}
-          disabled={currentSlide === 0 || isTransitioning}
+          disabled={(currentSlide === 0 && !showFooterTransition) || isTransitioning}
           className="fixed left-1/2 top-6 transform -translate-x-1/2 z-40 bg-black/80 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-black/90 transition-colors"
-          aria-label="Previous article"
+          aria-label="Previous"
         >
           ↑
         </button>
 
         <button
           onClick={() => {
-            if (currentSlide < articles.length - 1 && !isTransitioning) {
-              setCurrentSlide(prev => prev + 1)
-              scrollToSlide(currentSlide + 1)
+            if (!isTransitioning) {
+              if (currentSlide < articles.length - 1) {
+                setCurrentSlide(prev => prev + 1)
+                scrollToSlide(currentSlide + 1)
+              } else {
+                scrollToFooter()
+              }
             }
           }}
-          disabled={currentSlide === articles.length - 1 || isTransitioning}
+          disabled={isTransitioning}
           className="fixed left-1/2 bottom-20 transform -translate-x-1/2 z-40 bg-black/80 text-white p-2 rounded-full disabled:opacity-50 disabled:cursor-not-allowed hover:bg-black/90 transition-colors"
-          aria-label="Next article"
+          aria-label="Next"
         >
           ↓
         </button>
