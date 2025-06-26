@@ -75,7 +75,7 @@ export default function HamburgerMenu() {
       {/* Hamburger Button */}
       <button
         onClick={toggleMenu}
-        className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 transition-all duration-200 rounded-md shadow-lg hover:shadow-xl border border-gray-200/50"
+        className="fixed top-4 left-4 z-[70] w-10 h-10 flex items-center justify-center bg-white text-gray-700 hover:text-gray-900 transition-all duration-200 rounded-md shadow-lg hover:shadow-xl border border-gray-200"
         aria-label="Toggle menu"
         aria-expanded={isOpen}
         style={{ position: 'fixed' }}
