@@ -269,7 +269,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       {/* Progress Indicator */}
       <div className="fixed top-16 left-0 w-full h-1 bg-gray-200 z-40">
         <div 
-          className="h-full bg-primary transition-all duration-300 ease-out"
+          className="h-full transition-all duration-300 ease-out"
           style={{ 
             width: `${showFooterTransition ? 100 : ((currentSlide + 1) / articles.length) * 100}%` 
           }}
