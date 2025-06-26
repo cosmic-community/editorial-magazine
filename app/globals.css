@@ -1,3 +1,4 @@
+/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -177,6 +178,16 @@
     font-weight: 600;
     color: hsl(var(--foreground));
   }
+
+  /* Hamburger menu styles */
+  .hamburger-menu-panel {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hamburger-menu-panel.open {
+    transform: translateX(0);
+  }
 }
 
 @layer utilities {
@@ -301,6 +312,11 @@
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
+
+  /* Smooth scroll behavior */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Add specific fixes for header overlap */
@@ -323,4 +339,15 @@ article,
   padding-bottom: 0.5rem !important;
   /* Add minimum height to prevent compression */
   min-height: 2.5em;
+}
+
+/* Ensure smooth animations for header transitions */
+.header-transition {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Prevent menu button from being affected by header hide/show */
+.persistent-menu-button {
+  position: fixed;
+  z-index: 60;
 }
