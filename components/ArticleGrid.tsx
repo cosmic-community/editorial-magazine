@@ -45,7 +45,7 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
                 )}
 
                 {/* Title */}
-                <h3 className="text-3xl font-serif mb-4 group-hover:text-primary transition-colors">
+                <h3 className="text-3xl font-serif mb-4 group-hover:text-primary transition-colors line-clamp-4 leading-tight">
                   {articles[0].metadata?.headline || articles[0].title}
                 </h3>
 
@@ -95,7 +95,7 @@ export default function ArticleGrid({ articles }: ArticleGridProps) {
                 )}
 
                 {/* Title */}
-                <h3 className="text-xl font-serif mb-3 group-hover:text-primary transition-colors line-clamp-2">
+                <h3 className="text-xl font-serif mb-3 group-hover:text-primary transition-colors line-clamp-4 leading-snug">
                   {article.metadata?.headline || article.title}
                 </h3>
 

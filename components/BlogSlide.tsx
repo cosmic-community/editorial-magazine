@@ -63,7 +63,7 @@ export default function BlogSlide({
             <div className="text-white space-y-6 max-w-2xl">
               {/* Headline */}
               <h1 
-                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight transform transition-all duration-1000 delay-500 ${
+                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight line-clamp-4 transform transition-all duration-1000 delay-500 ${
                   hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 }`}
               >
