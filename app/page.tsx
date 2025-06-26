@@ -10,10 +10,8 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Scrolling Blog Layout with 90% scaling */}
-      <div className="homepage-scale">
-        <ScrollingBlogLayout articles={articles} />
-      </div>
+      {/* Scrolling Blog Layout */}
+      <ScrollingBlogLayout articles={articles} />
 
       {/* Footer - Now accessible after scrolling through articles */}
       <Footer siteSettings={siteSettings} />
