@@ -45,7 +45,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <Header siteSettings={siteSettings} />
-        <main>{children}</main>
+        <main className="pt-14">{children}</main>
       </body>
     </html>
   )

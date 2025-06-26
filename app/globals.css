@@ -328,8 +328,10 @@
   }
 }
 
+/* Remove any default margins from main and ensure seamless header transition */
 main {
   margin-top: 0;
+  border-top: none;
 }
 
 article,
@@ -352,4 +354,18 @@ article,
 .persistent-menu-button {
   position: fixed;
   z-index: 60;
+}
+
+/* Ensure no borders, shadows, or lines appear on the header */
+header {
+  border: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Remove any potential borders from header children */
+header * {
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
