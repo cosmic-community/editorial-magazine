@@ -61,22 +61,6 @@ export default function BlogSlide({
           <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
             {/* Text Content */}
             <div className="text-white space-y-6 max-w-2xl">
-              {/* Category Badge */}
-              {article.metadata?.category && (
-                <div 
-                  className={`transform transition-all duration-1000 delay-300 ${
-                    hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-                  }`}
-                >
-                  <Link
-                    href={`/categories/${article.metadata.category.slug}`}
-                    className="inline-block px-4 py-2 bg-primary text-white text-sm font-medium rounded-full hover:bg-primary/90 transition-colors"
-                  >
-                    {article.metadata.category.metadata?.name || article.metadata.category.title}
-                  </Link>
-                </div>
-              )}
-
               {/* Headline */}
               <h1 
                 className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight transform transition-all duration-1000 delay-500 ${
@@ -159,16 +143,44 @@ export default function BlogSlide({
                     <span className="text-white/80 text-sm uppercase tracking-wider">Featured Story</span>
                   </div>
                   
-                  {article.metadata?.tags && (
-                    <div className="flex flex-wrap gap-2">
-                      {article.metadata.tags.split(',').slice(0, 3).map((tag, tagIndex) => (
-                        <span 
-                          key={tagIndex}
-                          className="px-3 py-1 bg-white/20 text-white text-xs rounded-full"
-                        >
-                          {tag.trim()}
+                  {/* Clickable Category */}
+                  {article.metadata?.category && (
+                    <Link
+                      href={`/categories/${article.metadata.category.slug}`}
+                      className="block p-3 bg-white/20 hover:bg-white/30 rounded-lg transition-colors group"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-white font-medium">
+                          {article.metadata.category.metadata?.name || article.metadata.category.title}
                         </span>
-                      ))}
+                        <svg 
+                          className="w-4 h-4 text-white/70 group-hover:text-white group-hover:translate-x-1 transition-all" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                      <p className="text-white/70 text-sm mt-1">View all articles in this category</p>
+                    </Link>
+                  )}
+                  
+                  {/* Clickable Tags */}
+                  {article.metadata?.tags && (
+                    <div className="space-y-2">
+                      <span className="text-white/80 text-xs uppercase tracking-wider">Related Topics</span>
+                      <div className="flex flex-wrap gap-2">
+                        {article.metadata.tags.split(',').slice(0, 3).map((tag, tagIndex) => (
+                          <Link
+                            key={tagIndex}
+                            href={`/categories?tag=${encodeURIComponent(tag.trim())}`}
+                            className="px-3 py-1 bg-white/20 hover:bg-white/30 text-white text-xs rounded-full transition-colors hover:scale-105"
+                          >
+                            {tag.trim()}
+                          </Link>
+                        ))}
+                      </div>
                     </div>
                   )}
 

@@ -26,16 +26,6 @@ export default function HeroSection({ article }: HeroSectionProps) {
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-4 pb-16">
         <div className="text-white">
-          {/* Category Badge */}
-          {article.metadata?.category && (
-            <Link
-              href={`/categories/${article.metadata.category.slug}`}
-              className="inline-block px-3 py-1 bg-primary text-white text-sm font-medium rounded-full mb-4 hover:bg-primary/90 transition-colors"
-            >
-              {article.metadata.category.metadata?.name || article.metadata.category.title}
-            </Link>
-          )}
-
           {/* Headline */}
           <h1 className="text-4xl md:text-6xl font-serif mb-4 text-balance">
             {article.metadata?.headline || article.title}
