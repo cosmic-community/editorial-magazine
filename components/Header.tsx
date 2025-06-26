@@ -31,7 +31,7 @@ export default function Header({ siteSettings }: HeaderProps) {
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white border-b border-gray-200"
+      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white"
       style={{ 
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
         backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none'
