@@ -10,20 +10,23 @@ export interface CosmicObject {
   modified_at: string;
 }
 
+// Media file interface for Cosmic CMS file metafields
+export interface MediaFile {
+  url: string;
+  imgix_url: string;
+  name?: string;
+  size?: number;
+  type?: string;
+}
+
 // Site Settings
 export interface SiteSettings extends CosmicObject {
   type_slug: 'site-settings';
   metadata: {
     site_name?: string;
     tagline?: string;
-    logo?: {
-      url: string;
-      imgix_url: string;
-    };
-    favicon?: {
-      url: string;
-      imgix_url: string;
-    };
+    logo?: MediaFile;
+    favicon?: MediaFile;
     accent_color?: string;
     newsletter_enabled?: boolean;
     newsletter_heading?: string;
@@ -46,10 +49,7 @@ export interface Author extends CosmicObject {
   metadata: {
     full_name?: string;
     bio?: string;
-    profile_photo?: {
-      url: string;
-      imgix_url: string;
-    };
+    profile_photo?: MediaFile;
     job_title?: string;
     twitter?: string;
     linkedin?: string;
@@ -63,10 +63,7 @@ export interface Category extends CosmicObject {
   metadata: {
     name?: string;
     description?: string;
-    featured_image?: {
-      url: string;
-      imgix_url: string;
-    };
+    featured_image?: MediaFile;
     display_order?: number;
   };
 }
@@ -79,10 +76,7 @@ export interface Article extends CosmicObject {
     subheading?: string;
     excerpt?: string;
     content?: string;
-    featured_image?: {
-      url: string;
-      imgix_url: string;
-    };
+    featured_image?: MediaFile;
     featured?: boolean;
     category?: Category;
     author?: Author;
@@ -98,10 +92,7 @@ export interface Page extends CosmicObject {
   metadata: {
     page_title?: string;
     content?: string;
-    featured_image?: {
-      url: string;
-      imgix_url: string;
-    };
+    featured_image?: MediaFile;
     show_in_nav?: boolean;
   };
 }
