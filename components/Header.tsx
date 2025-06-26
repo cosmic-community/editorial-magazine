@@ -15,7 +15,7 @@ export default function Header({ siteSettings }: HeaderProps) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      const maxScroll = 200 // Adjust this value to control how quickly it becomes transparent
+      const maxScroll = 180 // Scaled from 200 for tighter feel
       
       // Calculate opacity: starts at 1, decreases as you scroll down
       // Minimum opacity is 0.8 to ensure header remains visible
@@ -37,33 +37,33 @@ export default function Header({ siteSettings }: HeaderProps) {
         backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none'
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+      <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7"> {/* Scaled max-width and padding */}
+        <div className="flex items-center justify-between h-14"> {/* Scaled from h-16 */}
           {/* Empty space for hamburger menu - it's now positioned fixed */}
-          <div className="w-10 h-10" />
+          <div className="w-9 h-9" /> {/* Scaled from w-10 h-10 */}
 
           {/* Logo / Site Name - Centered */}
           <Link 
             href="/" 
-            className="flex items-center space-x-3 group absolute left-1/2 transform -translate-x-1/2"
+            className="flex items-center space-x-2.5 group absolute left-1/2 transform -translate-x-1/2" /* Scaled space-x-3 */
           >
             {siteSettings?.metadata?.logo ? (
               <img 
-                src={`${siteSettings.metadata.logo.imgix_url}?w=160&h=50&fit=crop&auto=format,compress`}
+                src={`${siteSettings.metadata.logo.imgix_url}?w=144&h=45&fit=crop&auto=format,compress`} /* Scaled from 160x50 */
                 alt={siteSettings?.metadata?.site_name || 'Logo'}
-                width={160}
-                height={50}
-                className="h-8 w-auto transition-transform duration-200 group-hover:scale-105"
+                width={144}
+                height={45}
+                className="h-7 w-auto transition-transform duration-200 group-hover:scale-105" /* Scaled from h-8 */
               />
             ) : (
-              <h1 className="text-2xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700">
+              <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700"> {/* Scaled from text-2xl */}
                 {siteSettings?.metadata?.site_name || 'Editorial'}
               </h1>
             )}
           </Link>
 
           {/* Right side - placeholder for balance */}
-          <div className="w-10 h-10" />
+          <div className="w-9 h-9" /> {/* Scaled from w-10 h-10 */}
         </div>
       </div>
 
