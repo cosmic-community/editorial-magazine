@@ -160,13 +160,13 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     let touchEndY = 0
 
     const handleTouchStart = (e: TouchEvent) => {
-      touchStartY = e.touches[0].clientY
+      touchStartY = e.touches[0]?.clientY ?? 0
     }
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (isTransitioning) return
       
-      touchEndY = e.changedTouches[0].clientY
+      touchEndY = e.changedTouches[0]?.clientY ?? 0
       const deltaY = touchStartY - touchEndY
       const threshold = 50
 
@@ -183,8 +183,10 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       }
     }
 
-    window.addEventListener('touchstart', handleTouchStart, { passive: true })
-    window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    if (containerRef.current) {
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    }
 
     return () => {
       window.removeEventListener('touchstart', handleTouchStart)
