@@ -31,10 +31,13 @@ export default function Header({ siteSettings }: HeaderProps) {
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 bg-white"
+      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
       style={{ 
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
-        backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none'
+        backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none',
+        border: 'none',
+        borderBottom: 'none',
+        boxShadow: 'none'
       }}
     >
       <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7"> {/* Scaled max-width and padding */}
