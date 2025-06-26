@@ -293,8 +293,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
           )}
         </div>
 
-        {/* Navigation Dots */}
-        <div className="fixed left-6 top-1/2 transform -translate-y-1/2 z-40 space-y-3">
+        {/* Navigation Dots - Vertical Layout */}
+        <div className="fixed left-4 top-1/2 transform -translate-y-1/2 z-40 flex flex-col items-center space-y-4">
           {articles.map((_, index) => (
             <button
               key={index}
@@ -306,9 +306,9 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
                 }
               }}
               disabled={isTransitioning}
-              className={`w-3 h-3 rounded-full transition-all duration-300 disabled:opacity-50 ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 disabled:opacity-50 hover:scale-110 ${
                 index === currentSlide && !showFooterTransition
-                  ? 'bg-white scale-125' 
+                  ? 'bg-white scale-125 shadow-lg' 
                   : 'bg-white/50 hover:bg-white/75'
               }`}
               aria-label={`Go to slide ${index + 1}`}
@@ -316,6 +316,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
           ))}
           
           {/* Footer Dot */}
+          <div className="h-2" /> {/* Spacer */}
           <button
             onClick={() => {
               if (!isTransitioning) {
@@ -323,9 +324,9 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
               }
             }}
             disabled={isTransitioning}
-            className={`w-3 h-3 rounded-full transition-all duration-300 disabled:opacity-50 ${
+            className={`w-3 h-3 rounded-full transition-all duration-300 disabled:opacity-50 hover:scale-110 ${
               showFooterTransition
-                ? 'bg-white scale-125' 
+                ? 'bg-white scale-125 shadow-lg' 
                 : 'bg-white/50 hover:bg-white/75'
             }`}
             aria-label="Go to footer"
