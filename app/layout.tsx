@@ -1,7 +1,6 @@
 import { Inter } from 'next/font/google'
 import { getSiteSettings } from '@/lib/cosmic'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
 import './globals.css'
 
 const inter = Inter({
@@ -47,7 +46,6 @@ export default async function RootLayout({
       <body className="font-sans antialiased">
         <Header siteSettings={siteSettings} />
         <main>{children}</main>
-        <Footer siteSettings={siteSettings} />
       </body>
     </html>
   )
