@@ -150,6 +150,41 @@ html {
   left: 100%;
 }
 
+/* Improved text spacing and padding to prevent cropping */
+.slide-content h1,
+.slide-content h2,
+.slide-content h3 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.slide-content p {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+/* Featured image overlay improvements */
+.featured-image-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 40%,
+    rgba(0, 0, 0, 0.1) 60%,
+    transparent 100%
+  );
+}
+
+.featured-image-overlay .article-info {
+  padding: 1.5rem;
+  padding-bottom: 2rem; /* Extra bottom padding to prevent cropping */
+}
+
+.featured-image-overlay .article-title {
+  padding: 0.5rem 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
 /* Keyboard navigation indicators */
 kbd {
   font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
@@ -157,19 +192,26 @@ kbd {
   font-weight: 600;
 }
 
-/* Mobile optimizations */
+/* Mobile optimizations with improved spacing */
 @media (max-width: 768px) {
   .slide-content {
-    padding: 1rem;
+    padding: 1.5rem;
   }
   
   .slide-title {
     font-size: 2.5rem;
     line-height: 1.1;
+    padding: 0.75rem 0;
   }
   
   .slide-subtitle {
     font-size: 1.125rem;
+    padding: 0.5rem 0;
+  }
+
+  .featured-image-overlay .article-info {
+    padding: 1rem;
+    padding-bottom: 1.5rem;
   }
 
   /* Hide desktop navigation arrows on mobile */
@@ -182,6 +224,15 @@ kbd {
   /* Hide mobile swipe indicator on desktop */
   .mobile-nav {
     display: none;
+  }
+  
+  /* Better spacing for larger screens */
+  .slide-content h1 {
+    padding: 0.5rem 0 1rem 0;
+  }
+  
+  .slide-content p {
+    padding: 0.25rem 0 0.5rem 0;
   }
 }
 
