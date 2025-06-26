@@ -45,7 +45,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased">
         <Header siteSettings={siteSettings} />
-        <main className="pt-14">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   )
@@ -69,7 +69,7 @@ function hexToHsl(hex: string): string {
   
   if (max !== min) {
     const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+    s = l > 0.5 ? d / (2 - max - 1 - min) : d / (max + min)
     
     switch (max) {
       case r: h = (g - b) / d + (g < b ? 6 : 0); break

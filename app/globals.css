@@ -328,10 +328,10 @@
   }
 }
 
-/* Ensure seamless header transition with no borders or lines */
+/* Clean, minimal article presentation */
 main {
   margin-top: 0;
-  border-top: none;
+  border: none;
 }
 
 article,
@@ -356,42 +356,30 @@ article,
   z-index: 60;
 }
 
-/* Explicitly remove any borders, shadows, or lines from header */
+/* Ensure completely clean header with no visual borders or distractions */
 header {
   border: none !important;
-  border-bottom: none !important;
-  border-top: none !important;
   box-shadow: none !important;
   outline: none !important;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
 }
 
-/* Remove any potential borders from header children and containers */
 header *,
 header div,
-header nav,
-header .container,
-header > * {
+header nav {
   border: none !important;
-  border-bottom: none !important;
-  border-top: none !important;
   box-shadow: none !important;
   outline: none !important;
-  -webkit-box-shadow: none !important;
-  -moz-box-shadow: none !important;
 }
 
-/* Ensure no separation line between header and content */
+/* Seamless integration between header and content */
 body > main,
 main,
 .main-content {
   border-top: none !important;
   margin-top: 0 !important;
-  padding-top: 0 !important;
 }
 
-/* Remove any potential hr elements or pseudo-elements creating lines */
+/* Remove any potential visual separators */
 header::after,
 header::before,
 header *::after,

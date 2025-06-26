@@ -3,21 +3,21 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { SiteSettings } from '@/types'
-import HamburgerMenu from '@/components/HamburgerMenu'
 
 interface HeaderProps {
   siteSettings: SiteSettings | null
 }
 
 export default function Header({ siteSettings }: HeaderProps) {
-  const [scrollOpacity, setScrollOpacity] = useState(1)
+  const [scrollOpacity, setScrollOpacity] = useState(0.95)
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      const maxScroll = 180
+      const maxScroll = 200
       
-      const opacity = Math.max(0.8, 1 - (scrollY / maxScroll) * 0.2)
+      // Start more transparent and fade in slightly on scroll
+      const opacity = Math.min(0.98, 0.85 + (scrollY / maxScroll) * 0.13)
       setScrollOpacity(opacity)
     }
 
@@ -29,45 +29,38 @@ export default function Header({ siteSettings }: HeaderProps) {
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 m-0 p-0"
+      className="fixed top-0 right-0 z-50 transition-all duration-500 ease-out"
       style={{ 
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
-        backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none',
-        border: 'none',
-        borderBottom: 'none',
-        boxShadow: 'none',
-        margin: 0,
-        padding: 0
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
       }}
     >
-      <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7 m-0">
-        <div className="flex items-center justify-between h-14 m-0 p-0">
-          <div className="w-9 h-9" />
-
-          <Link 
-            href="/" 
-            className="flex items-center space-x-2.5 group absolute left-1/2 transform -translate-x-1/2 m-0 p-0"
-          >
-            {siteSettings?.metadata?.logo ? (
-              <img 
-                src={`${siteSettings.metadata.logo.imgix_url}?w=144&h=45&fit=crop&auto=format,compress`}
-                alt="Cosmic Signal"
-                width={144}
-                height={45}
-                className="h-7 w-auto transition-transform duration-200 group-hover:scale-105 m-0 p-0"
-              />
-            ) : (
-              <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700 m-0 p-0">
-                Cosmic Signal
+      <div className="p-6 sm:p-8">
+        <Link 
+          href="/" 
+          className="group block"
+        >
+          {siteSettings?.metadata?.logo ? (
+            <img 
+              src={`${siteSettings.metadata.logo.imgix_url}?w=240&h=60&fit=crop&auto=format,compress`}
+              alt="Cosmic Signal"
+              width={120}
+              height={30}
+              className="h-8 w-auto transition-all duration-300 group-hover:scale-105 group-hover:opacity-80 filter drop-shadow-sm"
+            />
+          ) : (
+            <div className="text-right">
+              <h1 className="text-2xl sm:text-3xl font-serif font-light text-gray-900 transition-all duration-300 group-hover:text-gray-600 tracking-tight">
+                Cosmic
               </h1>
-            )}
-          </Link>
-
-          <div className="w-9 h-9" />
-        </div>
+              <div className="text-sm sm:text-base font-mono font-medium text-gray-500 tracking-widest uppercase mt-1 transition-all duration-300 group-hover:text-gray-400">
+                Signal
+              </div>
+            </div>
+          )}
+        </Link>
       </div>
-
-      <HamburgerMenu />
     </header>
   )
 }
