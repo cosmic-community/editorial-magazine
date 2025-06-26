@@ -15,6 +15,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
   const [isScrolling, setIsScrolling] = useState(false)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [showFooterTransition, setShowFooterTransition] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false) // New state to track manual navigation
   const scrollProgress = useScrollProgress()
   const lastWheelTimeRef = useRef(0)
   const wheelDeltaRef = useRef(0)
@@ -26,6 +27,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     const slidePosition = containerRef.current.offsetTop + (clampedIndex * window.innerHeight)
     
     setIsTransitioning(true)
+    setIsNavigating(true) // Mark as manual navigation
     setCurrentSlide(clampedIndex) // Update current slide immediately
     setShowFooterTransition(false) // Reset footer transition when navigating to slide
     
@@ -34,9 +36,10 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       behavior: smooth ? 'smooth' : 'auto'
     })
 
-    // Reset transitioning state after animation
+    // Reset transitioning and navigation state after animation
     setTimeout(() => {
       setIsTransitioning(false)
+      setIsNavigating(false) // Reset navigation flag
     }, 800)
   }, [articles.length, isTransitioning])
 
@@ -44,6 +47,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
     if (!containerRef.current || isTransitioning) return
     
     setIsTransitioning(true)
+    setIsNavigating(true) // Mark as manual navigation
     setShowFooterTransition(true)
     
     // Calculate footer position (after all slides)
@@ -56,6 +60,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
     setTimeout(() => {
       setIsTransitioning(false)
+      setIsNavigating(false) // Reset navigation flag
     }, 800)
   }, [articles.length, isTransitioning])
 
@@ -155,7 +160,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
 
   useEffect(() => {
     const handleScroll = () => {
-      if (!containerRef.current || isTransitioning) return
+      if (!containerRef.current || isTransitioning || isNavigating) return // Skip if manually navigating
 
       const scrollTop = window.scrollY
       const containerTop = containerRef.current.offsetTop
@@ -198,7 +203,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       window.removeEventListener('wheel', handleWheel)
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [articles.length, currentSlide, isTransitioning, handleWheel, handleKeyDown])
+  }, [articles.length, currentSlide, isTransitioning, isNavigating, handleWheel, handleKeyDown]) // Added isNavigating to dependencies
 
   // Touch/swipe support for mobile
   useEffect(() => {
