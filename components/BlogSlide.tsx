@@ -11,6 +11,7 @@ interface BlogSlideProps {
   currentSlide: number
   isActive: boolean
   isScrolling: boolean
+  totalArticles: number
 }
 
 export default function BlogSlide({ 
@@ -18,7 +19,8 @@ export default function BlogSlide({
   index, 
   currentSlide, 
   isActive, 
-  isScrolling 
+  isScrolling,
+  totalArticles
 }: BlogSlideProps) {
   const [hasAnimated, setHasAnimated] = useState(false)
 
@@ -186,7 +188,7 @@ export default function BlogSlide({
       </div>
 
       {/* Scroll Indicator */}
-      {isActive && index < articles.length - 1 && (
+      {isActive && index < totalArticles - 1 && (
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
           <div className="flex flex-col items-center space-y-2">
             <span className="text-sm opacity-80">Scroll to explore</span>
