@@ -15,16 +15,14 @@ export default function Header({ siteSettings }: HeaderProps) {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      const maxScroll = 180 // Scaled from 200 for tighter feel
+      const maxScroll = 180
       
-      // Calculate opacity: starts at 1, decreases as you scroll down
-      // Minimum opacity is 0.8 to ensure header remains visible
       const opacity = Math.max(0.8, 1 - (scrollY / maxScroll) * 0.2)
       setScrollOpacity(opacity)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Initial calculation
+    handleScroll()
     
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -34,40 +32,39 @@ export default function Header({ siteSettings }: HeaderProps) {
       className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
       style={{ 
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
-        backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none'
+        backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none',
+        border: 'none',
+        borderBottom: 'none',
+        boxShadow: 'none'
       }}
     >
-      <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7"> {/* Scaled max-width and padding */}
-        <div className="flex items-center justify-between h-14"> {/* Scaled from h-16 */}
-          {/* Empty space for hamburger menu - it's now positioned fixed */}
-          <div className="w-9 h-9" /> {/* Scaled from w-10 h-10 */}
+      <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7">
+        <div className="flex items-center justify-between h-14">
+          <div className="w-9 h-9" />
 
-          {/* Logo / Site Name - Centered */}
           <Link 
             href="/" 
-            className="flex items-center space-x-2.5 group absolute left-1/2 transform -translate-x-1/2" /* Scaled space-x-3 */
+            className="flex items-center space-x-2.5 group absolute left-1/2 transform -translate-x-1/2"
           >
             {siteSettings?.metadata?.logo ? (
               <img 
-                src={`${siteSettings.metadata.logo.imgix_url}?w=144&h=45&fit=crop&auto=format,compress`} /* Scaled from 160x50 */
+                src={`${siteSettings.metadata.logo.imgix_url}?w=144&h=45&fit=crop&auto=format,compress`}
                 alt={siteSettings?.metadata?.site_name || 'Logo'}
                 width={144}
                 height={45}
-                className="h-7 w-auto transition-transform duration-200 group-hover:scale-105" /* Scaled from h-8 */
+                className="h-7 w-auto transition-transform duration-200 group-hover:scale-105"
               />
             ) : (
-              <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700"> {/* Scaled from text-2xl */}
+              <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700">
                 {siteSettings?.metadata?.site_name || 'Editorial'}
               </h1>
             )}
           </Link>
 
-          {/* Right side - placeholder for balance */}
-          <div className="w-9 h-9" /> {/* Scaled from w-10 h-10 */}
+          <div className="w-9 h-9" />
         </div>
       </div>
 
-      {/* Hamburger Menu - positioned independently */}
       <HamburgerMenu />
     </header>
   )
