@@ -49,14 +49,14 @@ export default function Header({ siteSettings }: HeaderProps) {
             {siteSettings?.metadata?.logo ? (
               <img 
                 src={`${siteSettings.metadata.logo.imgix_url}?w=144&h=45&fit=crop&auto=format,compress`}
-                alt={siteSettings?.metadata?.site_name || 'Logo'}
+                alt="Cosmic Signal"
                 width={144}
                 height={45}
                 className="h-7 w-auto transition-transform duration-200 group-hover:scale-105"
               />
             ) : (
               <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700">
-                {siteSettings?.metadata?.site_name || 'Cosmic Signal'}
+                Cosmic Signal
               </h1>
             )}
           </Link>
