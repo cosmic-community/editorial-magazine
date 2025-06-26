@@ -29,22 +29,24 @@ export default function Header({ siteSettings }: HeaderProps) {
 
   return (
     <header 
-      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300"
+      className="fixed top-0 left-0 right-0 z-40 transition-all duration-300 m-0 p-0"
       style={{ 
         backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
         backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none',
         border: 'none',
         borderBottom: 'none',
-        boxShadow: 'none'
+        boxShadow: 'none',
+        margin: 0,
+        padding: 0
       }}
     >
-      <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7">
-        <div className="flex items-center justify-between h-14">
+      <div className="max-w-6xl mx-auto px-3 sm:px-5 lg:px-7 m-0">
+        <div className="flex items-center justify-between h-14 m-0 p-0">
           <div className="w-9 h-9" />
 
           <Link 
             href="/" 
-            className="flex items-center space-x-2.5 group absolute left-1/2 transform -translate-x-1/2"
+            className="flex items-center space-x-2.5 group absolute left-1/2 transform -translate-x-1/2 m-0 p-0"
           >
             {siteSettings?.metadata?.logo ? (
               <img 
@@ -52,10 +54,10 @@ export default function Header({ siteSettings }: HeaderProps) {
                 alt="Cosmic Signal"
                 width={144}
                 height={45}
-                className="h-7 w-auto transition-transform duration-200 group-hover:scale-105"
+                className="h-7 w-auto transition-transform duration-200 group-hover:scale-105 m-0 p-0"
               />
             ) : (
-              <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700">
+              <h1 className="text-xl font-serif font-bold text-gray-900 transition-colors duration-200 group-hover:text-gray-700 m-0 p-0">
                 Cosmic Signal
               </h1>
             )}
