@@ -34,7 +34,7 @@ export default function BlogSlide({
 
   return (
     <div
-      className="absolute inset-0 transition-all duration-1000 ease-out"
+      className="absolute inset-0 w-full h-full transition-all duration-1000 ease-out"
       style={{
         transform: `translateY(${translateY}vh) scale(${scale})`,
         opacity,
@@ -54,11 +54,11 @@ export default function BlogSlide({
       )}
 
       {/* Content */}
-      <div className="relative z-10 h-full flex items-center">
-        <div className="max-w-4xl mx-auto px-6 w-full">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 h-full flex items-center justify-center px-6 py-12">
+        <div className="max-w-6xl mx-auto w-full h-full flex items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-center w-full">
             {/* Text Content */}
-            <div className="text-white space-y-6">
+            <div className="text-white space-y-6 max-w-2xl">
               {/* Category Badge */}
               {article.metadata?.category && (
                 <div 
@@ -77,7 +77,7 @@ export default function BlogSlide({
 
               {/* Headline */}
               <h1 
-                className={`text-4xl md:text-6xl lg:text-7xl font-serif leading-tight transform transition-all duration-1000 delay-500 ${
+                className={`text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-serif leading-tight transform transition-all duration-1000 delay-500 ${
                   hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 }`}
               >
@@ -87,7 +87,7 @@ export default function BlogSlide({
               {/* Subheading */}
               {article.metadata?.subheading && (
                 <p 
-                  className={`text-xl md:text-2xl text-gray-200 leading-relaxed transform transition-all duration-1000 delay-700 ${
+                  className={`text-lg md:text-xl lg:text-2xl text-gray-200 leading-relaxed transform transition-all duration-1000 delay-700 ${
                     hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
                 >
@@ -98,7 +98,7 @@ export default function BlogSlide({
               {/* Excerpt */}
               {article.metadata?.excerpt && (
                 <p 
-                  className={`text-lg text-gray-300 leading-relaxed max-w-xl transform transition-all duration-1000 delay-900 ${
+                  className={`text-base md:text-lg text-gray-300 leading-relaxed max-w-xl transform transition-all duration-1000 delay-900 ${
                     hasAnimated ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
                   }`}
                 >
@@ -150,7 +150,7 @@ export default function BlogSlide({
               }`}
             >
               {/* Additional visual element or content preview */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 max-w-md">
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-2 h-2 bg-primary rounded-full"></div>
@@ -186,7 +186,7 @@ export default function BlogSlide({
       </div>
 
       {/* Scroll Indicator */}
-      {isActive && index < 2 && (
+      {isActive && index < articles.length - 1 && (
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
           <div className="flex flex-col items-center space-y-2">
             <span className="text-sm opacity-80">Scroll to explore</span>

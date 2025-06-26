@@ -25,7 +25,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       const windowHeight = window.innerHeight
 
       // Calculate which slide should be active based on scroll position
-      const relativeScroll = scrollTop - containerTop + windowHeight / 2
+      const relativeScroll = scrollTop - containerTop
       const slideHeight = windowHeight
       const activeSlide = Math.floor(relativeScroll / slideHeight)
 
@@ -37,8 +37,8 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
       }
 
       // Check if we're actively scrolling through the blog section
-      const isInBlogSection = scrollTop >= containerTop - windowHeight / 2 && 
-                             scrollTop <= containerTop + containerHeight - windowHeight / 2
+      const isInBlogSection = scrollTop >= containerTop && 
+                             scrollTop <= containerTop + containerHeight - windowHeight
       setIsScrolling(isInBlogSection)
     }
 
@@ -97,11 +97,13 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
             <button
               key={index}
               onClick={() => {
-                const slidePosition = index * window.innerHeight
-                window.scrollTo({
-                  top: slidePosition,
-                  behavior: 'smooth'
-                })
+                if (containerRef.current) {
+                  const slidePosition = containerRef.current.offsetTop + (index * window.innerHeight)
+                  window.scrollTo({
+                    top: slidePosition,
+                    behavior: 'smooth'
+                  })
+                }
               }}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
                 index === currentSlide 
