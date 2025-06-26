@@ -1,4 +1,3 @@
-// components/HamburgerMenu.tsx
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
@@ -156,7 +155,7 @@ export default function HamburgerMenu({ siteSettings, isPersistent = false }: Ha
           {/* Menu Footer */}
           <div className="p-6 border-t border-border">
             <p className="text-sm text-muted-foreground">
-              {siteSettings?.metadata?.description || 'A modern editorial experience'}
+              {siteSettings?.metadata?.tagline || 'A modern editorial experience'}
             </p>
           </div>
         </div>
