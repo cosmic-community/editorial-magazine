@@ -36,6 +36,14 @@
     overflow-x: hidden;
   }
 
+  /* Scale down homepage content to 90% for better visual density */
+  .homepage-scale {
+    transform: scale(0.9);
+    transform-origin: top center;
+    width: 111.11%; /* Compensate for the scaling to maintain full width */
+    margin-left: -5.56%; /* Center the scaled content */
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: Georgia, serif;
     font-weight: 400;
