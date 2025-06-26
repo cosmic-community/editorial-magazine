@@ -87,6 +87,7 @@ export default function ScrollingBlogLayout({ articles }: ScrollingBlogLayoutPro
               currentSlide={currentSlide}
               isActive={index === currentSlide}
               isScrolling={isScrolling}
+              totalArticles={articles.length}
             />
           ))}
         </div>
