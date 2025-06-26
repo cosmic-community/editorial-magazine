@@ -10,30 +10,43 @@ interface HeaderProps {
 }
 
 export default function Header({ siteSettings }: HeaderProps) {
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [scrollOpacity, setScrollOpacity] = useState(1)
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
+      const scrollY = window.scrollY
+      const maxScroll = 200 // Adjust this value to control how quickly it becomes transparent
+      
+      // Calculate opacity: starts at 1, decreases as you scroll down
+      // Minimum opacity is 0.8 to ensure header remains visible
+      const opacity = Math.max(0.8, 1 - (scrollY / maxScroll) * 0.2)
+      setScrollOpacity(opacity)
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // Initial calculation
+    
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm' 
-        : 'bg-white'
-    }`}>
+    <header 
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white border-b border-gray-200"
+      style={{ 
+        backgroundColor: `rgba(255, 255, 255, ${scrollOpacity})`,
+        backdropFilter: scrollOpacity < 1 ? 'blur(8px)' : 'none'
+      }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Hamburger Menu */}
           <HamburgerMenu />
 
           {/* Logo / Site Name - Centered */}
-          <Link href="/" className="flex items-center space-x-3 group absolute left-1/2 transform -translate-x-1/2">
+          <Link 
+            href="/" 
+            className="flex items-center space-x-3 group absolute left-1/2 transform -translate-x-1/2"
+          >
             {siteSettings?.metadata?.logo ? (
               <img 
                 src={`${siteSettings.metadata.logo.imgix_url}?w=160&h=50&fit=crop&auto=format,compress`}
