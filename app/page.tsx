@@ -1,7 +1,7 @@
 import { getArticles, getSiteSettings } from '@/lib/cosmic'
 import ScrollingBlogLayout from '@/components/ScrollingBlogLayout'
 import NewsletterSection from '@/components/NewsletterSection'
-import AboutSection from '@/components/AboutSection'
+import Footer from '@/components/Footer'
 
 export default async function HomePage() {
   const [articles, siteSettings] = await Promise.all([
@@ -19,10 +19,8 @@ export default async function HomePage() {
         <NewsletterSection siteSettings={siteSettings} />
       )}
 
-      {/* About Section */}
-      {siteSettings?.metadata?.footer_about && (
-        <AboutSection siteSettings={siteSettings} />
-      )}
+      {/* Footer */}
+      <Footer siteSettings={siteSettings} />
     </div>
   )
 }
