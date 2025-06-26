@@ -1,6 +1,16 @@
-/* Smooth scrolling behavior */
+/* Smooth scrolling behavior with snap points */
 html {
   scroll-behavior: smooth;
+}
+
+/* Snap container for article scrolling */
+.snap-container {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -28,7 +38,7 @@ html {
   background: rgba(255, 255, 255, 0.5);
 }
 
-/* Slide transitions */
+/* Enhanced slide transitions */
 .slide-enter {
   opacity: 0;
   transform: translateY(50px) scale(0.95);
@@ -37,7 +47,7 @@ html {
 .slide-enter-active {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: all 1000ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .slide-exit {
@@ -48,7 +58,13 @@ html {
 .slide-exit-active {
   opacity: 0;
   transform: translateY(-50px) scale(1.05);
-  transition: all 1000ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Prevent wheel event bubbling during transitions */
+.scroll-locked {
+  overflow: hidden;
+  touch-action: none;
 }
 
 /* Text animation classes */
@@ -82,10 +98,10 @@ html {
   filter: blur(0);
 }
 
-/* Progress indicator animations */
+/* Enhanced progress indicator animations */
 .progress-bar {
   transform-origin: left;
-  transition: transform 0.3s ease-out;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Navigation dots hover effects */
@@ -134,6 +150,13 @@ html {
   left: 100%;
 }
 
+/* Keyboard navigation indicators */
+kbd {
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .slide-content {
@@ -147,6 +170,18 @@ html {
   
   .slide-subtitle {
     font-size: 1.125rem;
+  }
+
+  /* Hide desktop navigation arrows on mobile */
+  .desktop-nav {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  /* Hide mobile swipe indicator on desktop */
+  .mobile-nav {
+    display: none;
   }
 }
 
@@ -174,11 +209,26 @@ html {
   }
 }
 
+/* Transition states */
+.transitioning {
+  pointer-events: none;
+  user-select: none;
+}
+
 /* Focus states for accessibility */
 .nav-dot:focus,
-.cta-button:focus {
+.cta-button:focus,
+button:focus {
   outline: 2px solid rgba(255, 255, 255, 0.8);
   outline-offset: 2px;
+}
+
+/* Snap scroll polyfill for browsers that don't support it */
+@supports not (scroll-snap-type: y mandatory) {
+  .snap-container {
+    /* Fallback for older browsers */
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* Reduced motion preferences */
@@ -198,5 +248,28 @@ html {
   
   html {
     scroll-behavior: auto;
+  }
+
+  /* Disable snap scrolling for reduced motion */
+  .snap-container {
+    scroll-snap-type: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .nav-dot {
+    border: 2px solid currentColor;
+  }
+  
+  .progress-bar {
+    background: currentColor;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .slide-loading {
+    background: linear-gradient(90deg, #2a2a2a 25%, #1a1a1a 50%, #2a2a2a 75%);
   }
 }
